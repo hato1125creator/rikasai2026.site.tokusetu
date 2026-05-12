@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>フロアマップ — 梨花祭2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@300;400;500&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold:#d4a843; --gold-light:#f0d080; --gold-pale:#faf0d0;
+  --teal:#2a7a80; --teal-light:#48b0b8;
+  --cream:#fdf8f0; --ink:#1a120a; --ink-soft:#3a2818; --parchment:#f5ead8;
+
+  /* エリアカラー */
+  --c-food:   #e8826a;
+  --c-exp:    #5bb0c0;
+  --c-exhibit:#c8a040;
+  --c-shop:   #70b870;
+  --c-stage:  #c060a0;
+  --c-other:  #8898b0;
+  --c-wc:     #9090a8;
+  --c-stairs: #b8a890;
+  --c-hall:   #d0c8b8;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { background:var(--cream); color:var(--ink); font-family:'Noto Serif JP',serif; min-height:100vh; }
+
+/* ── NAV ── */
+.top-nav {
+  background:var(--ink); border-bottom:1px solid rgba(212,168,67,0.2);
+  padding:0 24px; position:sticky; top:0; z-index:200;
+}
+.top-nav-inner {
+  max-width:1100px; margin:0 auto;
+  display:flex; align-items:center; height:52px; gap:0;
+}
+.back-btn {
+  font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.25em;
+  color:rgba(240,208,128,0.5); text-decoration:none;
+  display:flex; align-items:center; gap:8px; text-transform:uppercase;
+  transition:color 0.2s;
+}
+.back-btn:hover { color:var(--gold-light); }
+.back-btn::before { content:'←'; font-family:sans-serif; font-size:13px; }
+.nav-sep { width:1px; height:20px; background:rgba(212,168,67,0.15); margin:0 20px; }
+.nav-site { font-family:'Noto Serif JP',serif; font-size:15px; font-weight:300; color:rgba(240,208,128,0.4); letter-spacing:0.1em; }
+.nav-right { margin-left:auto; display:flex; gap:0; }
+.nav-right a {
+  font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.2em;
+  color:rgba(240,208,128,0.35); text-decoration:none; padding:0 14px;
+  text-transform:uppercase; transition:color 0.2s;
+}
+.nav-right a:hover { color:var(--gold); }
+
+/* ===== NAV ===== */
+nav{background:var(--ink);padding:0 24px;position:sticky;top:0;z-index:100;}
+.nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;height:52px;gap:24px;flex-wrap:wrap;}
+.nav-inner a{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.2em;color:rgba(240,208,128,.4);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+.nav-inner a:hover{color:var(--gold);}
+
+/* ── HERO ── */
+.page-hero {
+  background:var(--ink); padding:48px 24px 40px;
+  position:relative; overflow:hidden;
+  border-bottom:1px solid rgba(212,168,67,0.15);
+}
+.page-hero::before {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse at 20% 60%, rgba(212,168,67,0.07) 0%, transparent 55%),
+             radial-gradient(ellipse at 80% 30%, rgba(72,176,184,0.05) 0%, transparent 50%);
+}
+.page-hero-inner { max-width:1100px; margin:0 auto; position:relative; }
+.page-hero-eyebrow {
+  font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.4em;
+  color:var(--gold); opacity:0.6; text-transform:uppercase; display:block; margin-bottom:12px;
+}
+.page-hero-title {
+  font-family:'Noto Serif JP',serif; font-size:clamp(24px,4vw,36px);
+  font-weight:300; color:var(--gold-light); letter-spacing:0.15em; margin-bottom:8px;
+}
+.page-hero-sub {
+  font-family:'Cormorant Garamond',serif; font-size:15px; font-style:italic;
+  color:rgba(240,208,128,0.38); letter-spacing:0.15em;
+}
+
+/* ── MAIN LAYOUT ── */
+.main-wrap { max-width:1100px; margin:0 auto; padding:32px 24px 80px; display:flex; gap:32px; align-items:flex-start; }
+@media(max-width:860px) { .main-wrap { flex-direction:column; } }
+
+/* ── LEFT: MAP PANEL ── */
+.map-panel { flex:1; min-width:0; }
+
+/* floor tabs */
+.floor-tabs {
+  display:flex; gap:0; margin-bottom:20px;
+  border:1px solid rgba(212,168,67,0.25); width:fit-content;
+}
+.floor-tab {
+  padding:10px 20px; font-family:'Cinzel',serif; font-size:9px;
+  letter-spacing:0.2em; text-transform:uppercase;
+  background:transparent; border:none; color:rgba(58,40,24,0.45);
+  cursor:pointer; transition:all 0.2s;
+  border-right:1px solid rgba(212,168,67,0.2);
+}
+.floor-tab:last-child { border-right:none; }
+.floor-tab.active { background:var(--ink); color:var(--gold-light); }
+.floor-tab:hover:not(.active) { background:rgba(212,168,67,0.08); color:var(--ink-soft); }
+
+/* map container */
+.map-container {
+  background:var(--parchment); border:1px solid rgba(212,168,67,0.25);
+  position:relative; overflow:hidden;
+}
+.map-svg-wrap {
+  width:100%; overflow:auto; position:relative;
+}
+.floor-map { display:none; }
+.floor-map.active { display:block; }
+
+/* map controls */
+.map-controls {
+  display:flex; gap:8px; margin-bottom:12px; align-items:center;
+}
+.zoom-btn {
+  width:32px; height:32px; background:var(--parchment);
+  border:1px solid rgba(212,168,67,0.3); cursor:pointer;
+  font-size:16px; display:flex; align-items:center; justify-content:center;
+  transition:background 0.2s; color:var(--ink-soft);
+}
+.zoom-btn:hover { background:rgba(212,168,67,0.15); }
+.zoom-label {
+  font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.2em;
+  color:var(--gold); opacity:0.6; text-transform:uppercase; margin-left:4px;
+}
+.reset-btn {
+  margin-left:auto; padding:6px 14px;
+  font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.15em;
+  background:transparent; border:1px solid rgba(212,168,67,0.3);
+  color:rgba(58,40,24,0.5); cursor:pointer; text-transform:uppercase;
+  transition:all 0.2s;
+}
+.reset-btn:hover { border-color:var(--gold); color:var(--ink-soft); }
+
+/* room tooltip */
+.room-tooltip {
+  position:fixed; z-index:999; pointer-events:none;
+  background:var(--ink); border:1px solid rgba(212,168,67,0.4);
+  padding:10px 14px; max-width:220px;
+  box-shadow:0 8px 24px rgba(0,0,0,0.3);
+  opacity:0; transition:opacity 0.15s;
+}
+.room-tooltip.show { opacity:1; }
+.tooltip-grade { font-family:'Cinzel',serif; font-size:8px; letter-spacing:0.2em; color:var(--gold); opacity:0.7; text-transform:uppercase; display:block; margin-bottom:4px; }
+.tooltip-title { font-size:13px; color:var(--gold-light); font-weight:400; line-height:1.4; margin-bottom:6px; }
+.tooltip-type  { font-size:10px; color:rgba(240,208,128,0.5); }
+.tooltip-info  { font-size:11px; color:rgba(240,208,128,0.4); margin-top:4px; font-weight:300; }
+
+/* ── RIGHT: LEGEND + LIST ── */
+.side-panel { width:260px; flex-shrink:0; }
+@media(max-width:860px) { .side-panel { width:100%; } }
+
+.legend-card {
+  background:var(--parchment); border:1px solid rgba(212,168,67,0.22);
+  padding:20px; margin-bottom:20px;
+}
+.legend-card::before {
+  content:''; display:block; height:2px; margin:-20px -20px 16px;
+  background:linear-gradient(90deg, var(--gold), var(--teal-light));
+}
+.legend-title {
+  font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.3em;
+  color:var(--gold); text-transform:uppercase; opacity:0.7; margin-bottom:14px;
+}
+.legend-items { display:flex; flex-direction:column; gap:8px; }
+.legend-item { display:flex; align-items:center; gap:10px; }
+.legend-dot { width:12px; height:12px; flex-shrink:0; }
+.legend-label { font-size:12px; color:var(--ink-soft); font-weight:300; }
+
+/* room list */
+.room-list-card {
+  background:var(--parchment); border:1px solid rgba(212,168,67,0.22); padding:20px;
+}
+.room-list-card::before {
+  content:''; display:block; height:2px; margin:-20px -20px 16px;
+  background:linear-gradient(90deg, var(--teal), var(--gold));
+}
+.room-list-title {
+  font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.3em;
+  color:var(--gold); text-transform:uppercase; opacity:0.7; margin-bottom:14px;
+}
+.room-list { display:flex; flex-direction:column; gap:0; max-height:480px; overflow-y:auto; }
+.room-list::-webkit-scrollbar { width:4px; }
+.room-list::-webkit-scrollbar-track { background:transparent; }
+.room-list::-webkit-scrollbar-thumb { background:rgba(212,168,67,0.3); }
+.room-item {
+  display:flex; align-items:flex-start; gap:10px;
+  padding:10px 0; border-bottom:1px solid rgba(212,168,67,0.1);
+  cursor:pointer; transition:background 0.15s; border-radius:2px;
+}
+.room-item:last-child { border-bottom:none; }
+.room-item:hover { background:rgba(212,168,67,0.06); }
+.room-item-dot { width:8px; height:8px; flex-shrink:0; margin-top:4px; }
+.room-item-body { flex:1; min-width:0; }
+.room-item-name { font-size:12px; color:var(--ink-soft); font-weight:400; line-height:1.4; }
+.room-item-sub  { font-size:10px; color:rgba(58,40,24,0.45); font-weight:300; margin-top:2px; }
+
+/* floor filter for list */
+.list-floor-tabs {
+  display:flex; gap:6px; margin-bottom:12px; flex-wrap:wrap;
+}
+.list-floor-btn {
+  padding:4px 10px; font-family:'Cinzel',serif; font-size:8px; letter-spacing:0.15em;
+  border:1px solid rgba(212,168,67,0.3); background:transparent;
+  color:rgba(58,40,24,0.45); cursor:pointer; text-transform:uppercase; transition:all 0.2s;
+}
+.list-floor-btn.active { background:var(--ink); color:var(--gold-light); border-color:var(--ink); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="about.html">梨花祭とは</a>
+    <a href="attractions.html">企画一覧</a>
+    <a href="map.html">マップ</a>
+    <a href="schedule.html">プログラム</a>
+    <a onclick="scrollToSection('notice')">お知らせ</a>
+    <a onclick="scrollToSection('award')">梨花祭賞</a>
+    <a href="gallery.html">ギャラリー</a>
+    <a href="rules.html">ご注意</a>
+    <a href="ticket.html">料金</a>
+    <a href="sns.html">SNS</a>
+    <a onclick="scrollToSection('access')">アクセス</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <span class="page-hero-eyebrow">Rikasai 2026 — Floor Guide</span>
+    <h1 class="page-hero-title">フロアマップ</h1>
+    <p class="page-hero-sub">Floor Map &amp; Room Guide</p>
+  </div>
+</section>
+
+<!-- TOOLTIP -->
+<div class="room-tooltip" id="tooltip">
+  <span class="tooltip-grade" id="tt-grade"></span>
+  <div class="tooltip-title"  id="tt-title"></div>
+  <div class="tooltip-type"   id="tt-type"></div>
+  <div class="tooltip-info"   id="tt-info"></div>
+</div>
+
+<!-- MAIN -->
+<div class="main-wrap">
+
+  <!-- LEFT: MAP -->
+  <div class="map-panel">
+    <div class="map-controls">
+      <button class="zoom-btn" onclick="zoom(1.2)">＋</button>
+      <button class="zoom-btn" onclick="zoom(0.8)">－</button>
+      <span class="zoom-label">Zoom</span>
+      <button class="reset-btn" onclick="resetZoom()">リセット</button>
+    </div>
+    <div class="floor-tabs" id="floorTabs"></div>
+    <div class="map-container">
+      <div class="map-svg-wrap" id="mapWrap">
+        <!-- SVGs injected by JS -->
+      </div>
+    </div>
+    <p style="margin-top:10px;font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.2em;color:rgba(58,40,24,0.35);text-transform:uppercase;">
+      ＊ 間取りは仮のレイアウトです。実際の配置と異なる場合があります。
+    </p>
+  </div>
+
+  <!-- RIGHT: LEGEND + LIST -->
+  <div class="side-panel">
+    <div class="legend-card">
+      <p class="legend-title">Legend — 凡例</p>
+      <div class="legend-items">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--c-food)"></div>   <span class="legend-label">飲食</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--c-exp)"></div>    <span class="legend-label">体験・ゲーム</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--c-exhibit)"></div><span class="legend-label">展示・アート</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--c-shop)"></div>   <span class="legend-label">物販</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--c-stage)"></div>  <span class="legend-label">ステージ・部活</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--c-other)"></div>  <span class="legend-label">その他・生徒会</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--c-hall)"></div>   <span class="legend-label">通路・ホール</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--c-wc)"></div>     <span class="legend-label">トイレ・WC</span></div>
+      </div>
+    </div>
+
+    <div class="room-list-card">
+      <p class="room-list-title">Room List — 部屋一覧</p>
+      <div class="list-floor-tabs" id="listFloorTabs"></div>
+      <div class="room-list" id="roomList"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// DATA
+// room: { id, floor, label, grade, title, type, typeColor, info, x, y, w, h }
+// ============================================================
+const TYPE_COLOR = {
+  '飲食':    'var(--c-food)',
+  '体験':    'var(--c-exp)',
+  '展示':    'var(--c-exhibit)',
+  '物販':    'var(--c-shop)',
+  'ステージ':'var(--c-stage)',
+  'その他':  'var(--c-other)',
+  '廊下':    'var(--c-hall)',
+  'トイレ':  'var(--c-wc)',
+  '階段':    'var(--c-stairs)',
+};
+
+// Floor definitions
+const FLOORS = [
+  { id:'f1', label:'1F', name:'1号棟 1階' },
+  { id:'f2', label:'2F', name:'1号棟 2階' },
+  { id:'f3', label:'3F', name:'2号棟 1階' },
+  { id:'f4', label:'外', name:'屋外エリア' },
+];
+
+// SVG canvas size
+const W = 700, H = 480;
+
+// Rooms per floor  [id, label表示, grade, title, type, info表示, x, y, w, h]
+const ROOMS = {
+  f1: [
+    { id:'r101', label:'多目的室', grade:'1年C組', title:'呪われた館の怪談写真館', type:'体験', info:'10:00–15:00 / 100円', x:20,  y:20,  w:150, h:100 },
+    { id:'r102', label:'和室',     grade:'保健委員会', title:'癒しの森 休憩所',    type:'その他',info:'10:00–15:30 / 無料', x:20,  y:130, w:150, h:100 },
+    { id:'r103', label:'廊下A',   grade:'', title:'廊下',                          type:'廊下',  info:'',                  x:20,  y:240, w:150, h:30  },
+    { id:'r104', label:'教室A',   grade:'1年A組', title:'おとぎ話カフェ',           type:'飲食',  info:'10:00–15:30 / 300円〜', x:180, y:20,  w:160, h:100 },
+    { id:'r105', label:'教室B',   grade:'ボランティア部', title:'子ども向け絵本コーナー', type:'その他',info:'10:00–15:30 / 無料', x:180, y:130, w:160, h:100 },
+    { id:'r106', label:'受付',    grade:'生徒会',  title:'総合受付・スタンプラリー', type:'その他',info:'9:00–15:30',         x:350, y:20,  w:120, h:60  },
+    { id:'r107', label:'WC',      grade:'',        title:'トイレ',                  type:'トイレ',info:'',                  x:350, y:90,  w:60,  h:50  },
+    { id:'r108', label:'WC',      grade:'',        title:'トイレ',                  type:'トイレ',info:'',                  x:420, y:90,  w:60,  h:50  },
+    { id:'r109', label:'階段',    grade:'',        title:'階段',                    type:'階段',  info:'',                  x:490, y:20,  w:50,  h:120 },
+    { id:'r110', label:'EV',      grade:'',        title:'エレベーター',            type:'階段',  info:'',                  x:550, y:20,  w:50,  h:60  },
+    { id:'r111', label:'図書室',  grade:'図書委員会',title:'本のフリマ',            type:'物販',  info:'10:00–14:00 / 50円〜',x:350, y:150, w:250, h:110 },
+    { id:'r112', label:'廊下B',   grade:'', title:'廊下',                           type:'廊下',  info:'',                  x:180, y:240, w:420, h:30  },
+    { id:'r113', label:'玄関ホール',grade:'',title:'玄関・メインホール',            type:'廊下',  info:'',                  x:180, y:280, w:420, h:60  },
+    { id:'r114', label:'WC',      grade:'',title:'トイレ',                          type:'トイレ',info:'',                  x:20,  y:280, w:150, h:60  },
+    { id:'r115', label:'保健室',  grade:'',title:'保健室',                          type:'その他',info:'緊急時のみ',        x:20,  y:350, w:150, h:100 },
+    { id:'r116', label:'会議室',  grade:'ゲーム同好会',title:'レトロゲーム大会',    type:'体験',  info:'10:00–15:30 / 無料', x:180, y:350, w:200, h:100 },
+    { id:'r117', label:'放送室',  grade:'放送部',  title:'梨花祭FM 公開生放送',     type:'ステージ',info:'9:00–16:00',        x:390, y:350, w:210, h:100 },
+  ],
+  f2: [
+    { id:'r201', label:'教室A',   grade:'2年A組',   title:'竜の宝物展示室',         type:'展示',  info:'9:30–15:30 / 無料', x:20,  y:20,  w:160, h:110 },
+    { id:'r202', label:'教室B',   grade:'1年B組',   title:'魔法使いの謎解き迷宮',   type:'体験',  info:'30分・無料',        x:20,  y:140, w:160, h:110 },
+    { id:'r203', label:'廊下',    grade:'',          title:'廊下',                   type:'廊下',  info:'',                  x:20,  y:260, w:160, h:30  },
+    { id:'r204', label:'教室C',   grade:'2年C組',   title:'魔女の占いの館',          type:'体験',  info:'10:00–15:30 / 無料',x:190, y:20,  w:160, h:110 },
+    { id:'r205', label:'教室D',   grade:'2年D組',   title:'錬金術師のチョコ工房',   type:'体験',  info:'10:00–14:00 / 300円',x:190, y:140, w:160, h:110 },
+    { id:'r206', label:'WC',      grade:'',          title:'トイレ',                 type:'トイレ',info:'',                  x:360, y:20,  w:60,  h:70  },
+    { id:'r207', label:'WC',      grade:'',          title:'トイレ',                 type:'トイレ',info:'',                  x:360, y:100, w:60,  h:50  },
+    { id:'r208', label:'階段',    grade:'',          title:'階段',                   type:'階段',  info:'',                  x:430, y:20,  w:50,  h:130 },
+    { id:'r209', label:'EV',      grade:'',          title:'エレベーター',           type:'階段',  info:'',                  x:490, y:20,  w:50,  h:70  },
+    { id:'r210', label:'漫画研究会',grade:'漫画研究会',title:'マンガ同人誌即売会',   type:'物販',  info:'10:00〜 / 100円〜',  x:550, y:20,  w:130, h:110 },
+    { id:'r211', label:'映像研究会',grade:'映像研究会',title:'ショートフィルム上映会',type:'ステージ',info:'10:30〜 / 無料',  x:550, y:140, w:130, h:110 },
+    { id:'r212', label:'廊下',    grade:'',          title:'廊下',                   type:'廊下',  info:'',                  x:190, y:260, w:490, h:30  },
+    { id:'r213', label:'家庭科部',grade:'家庭科部',  title:'ファンタジー料理展示',   type:'展示',  info:'10:00–15:00 / 無料', x:190, y:300, w:200, h:160 },
+    { id:'r214', label:'美術部',  grade:'美術部',    title:'幻想画廊',               type:'展示',  info:'9:30–15:30 / 無料',  x:400, y:300, w:280, h:160 },
+    { id:'r215', label:'書道部スペース',grade:'書道部',title:'書道作品展示',         type:'展示',  info:'9:30–15:30 / 無料',  x:20,  y:300, w:160, h:80  },
+    { id:'r216', label:'写真部',  grade:'写真部',    title:'光と影の冒険 写真展',    type:'展示',  info:'9:00–16:00 / 無料',  x:20,  y:390, w:160, h:70  },
+  ],
+  f3: [
+    { id:'r301', label:'展示室',  grade:'2年E組',   title:'精霊の森ジオラマ展',     type:'展示',  info:'9:30–15:30 / 無料',  x:20,  y:20,  w:200, h:130 },
+    { id:'r302', label:'理科教室1',grade:'科学部',  title:'魔法の実験ショー',        type:'体験',  info:'11:00/13:00/14:30',   x:20,  y:160, w:200, h:130 },
+    { id:'r303', label:'廊下',    grade:'',          title:'廊下',                   type:'廊下',  info:'',                  x:20,  y:300, w:200, h:30  },
+    { id:'r304', label:'理科教室2',grade:'3年A組',  title:'魔女のポーション工房',    type:'体験',  info:'約15分 / 200円',     x:230, y:20,  w:200, h:130 },
+    { id:'r305', label:'茶道部',  grade:'茶道部',    title:'おとぎ茶会',             type:'体験',  info:'10:00–15:00 / 300円', x:230, y:160, w:200, h:130 },
+    { id:'r306', label:'WC',      grade:'',          title:'トイレ',                 type:'トイレ',info:'',                  x:440, y:20,  w:60,  h:80  },
+    { id:'r307', label:'階段',    grade:'',          title:'階段',                   type:'階段',  info:'',                  x:510, y:20,  w:50,  h:130 },
+    { id:'r308', label:'EV',      grade:'',          title:'エレベーター',           type:'階段',  info:'',                  x:570, y:20,  w:60,  h:80  },
+    { id:'r309', label:'教室F',   grade:'1年F組',   title:'星の図書館',              type:'展示',  info:'9:30–15:30 / 無料',  x:440, y:110, w:190, h:160 },
+    { id:'r310', label:'廊下',    grade:'',          title:'廊下',                   type:'廊下',  info:'',                  x:230, y:300, w:400, h:30  },
+    { id:'r311', label:'天文台教室',grade:'3年B組', title:'天空の観測所',            type:'展示',  info:'10:00–15:00 / 無料', x:20,  y:340, w:300, h:120 },
+    { id:'r312', label:'多目的室（暗室）',grade:'3年F組',title:'魔王城のイルミアート',type:'展示',info:'10:00–16:00 / 無料',  x:330, y:340, w:310, h:120 },
+  ],
+  f4: [
+    { id:'r401', label:'体育館\n大ホール',  grade:'演劇部・吹奏楽部ほか', title:'ステージ会場',   type:'ステージ',info:'各公演時間参照',    x:20,  y:20,  w:300, h:200 },
+    { id:'r402', label:'体育館\nサブ',      grade:'バドミントン部',       title:'バドミントン体験', type:'体験', info:'10:00–15:00 / 無料', x:20,  y:230, w:300, h:130 },
+    { id:'r403', label:'正門前広場',        grade:'有志グループ',         title:'コスプレ撮影スポット',type:'体験',info:'10:00–15:30 / 無料',x:330, y:20,  w:180, h:100 },
+    { id:'r404', label:'正門受付',          grade:'生徒会',               title:'受付・QRコード確認',type:'その他',info:'9:00–15:30',       x:330, y:130, w:180, h:80  },
+    { id:'r405', label:'中庭\nステージ',    grade:'軽音楽部・書道部ほか', title:'中庭ステージ',    type:'ステージ',info:'11:00〜（複数回）', x:330, y:220, w:180, h:140 },
+    { id:'r406', label:'屋台\nエリアA',    grade:'1年E組',               title:'王様の宴 屋台',   type:'飲食',  info:'10:30–14:30',        x:520, y:20,  w:160, h:110 },
+    { id:'r407', label:'屋台\nエリアB',    grade:'料理研究会',           title:'世界の魔法料理',  type:'飲食',  info:'11:00–13:30',        x:520, y:140, w:160, h:90  },
+    { id:'r408', label:'中庭\nマーケット',  grade:'2年B組',              title:'森の妖精マーケット',type:'物販', info:'10:00–15:00',        x:520, y:240, w:160, h:120 },
+    { id:'r409', label:'駐輪場',           grade:'',                     title:'駐輪場',          type:'廊下',  info:'',                   x:20,  y:370, w:300, h:90  },
+    { id:'r410', label:'WC（仮設）',       grade:'',                     title:'仮設トイレ',      type:'トイレ',info:'',                   x:520, y:370, w:160, h:90  },
+  ],
+};
+
+// ============================================================
+// STATE
+// ============================================================
+let currentFloor = 'f1';
+let listFloor = 'f1';
+let scale = 1;
+let isDragging = false, startX, startY, scrollLeft, scrollTop;
+
+// ============================================================
+// BUILD TABS
+// ============================================================
+function buildTabs() {
+  const tabs = document.getElementById('floorTabs');
+  const listTabs = document.getElementById('listFloorTabs');
+  FLOORS.forEach(f => {
+    const btn = document.createElement('button');
+    btn.className = 'floor-tab' + (f.id === currentFloor ? ' active' : '');
+    btn.textContent = f.label;
+    btn.onclick = () => switchFloor(f.id);
+    tabs.appendChild(btn);
+
+    const btn2 = document.createElement('button');
+    btn2.className = 'list-floor-btn' + (f.id === listFloor ? ' active' : '');
+    btn2.textContent = f.label;
+    btn2.onclick = () => switchListFloor(f.id);
+    listTabs.appendChild(btn2);
+  });
+}
+
+// ============================================================
+// BUILD SVG MAP
+// ============================================================
+function buildMap(floorId) {
+  const rooms = ROOMS[floorId];
+  const svgNS = 'http://www.w3.org/2000/svg';
+
+  const svg = document.createElementNS(svgNS, 'svg');
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.setAttribute('width', W);
+  svg.setAttribute('height', H);
+  svg.style.display = 'block';
+
+  // background
+  const bg = document.createElementNS(svgNS, 'rect');
+  bg.setAttribute('width', W); bg.setAttribute('height', H);
+  bg.setAttribute('fill', '#f5ead8');
+  svg.appendChild(bg);
+
+  // grid lines (subtle)
+  for (let x = 0; x <= W; x += 20) {
+    const l = document.createElementNS(svgNS, 'line');
+    l.setAttribute('x1', x); l.setAttribute('y1', 0);
+    l.setAttribute('x2', x); l.setAttribute('y2', H);
+    l.setAttribute('stroke', 'rgba(212,168,67,0.06)'); l.setAttribute('stroke-width', '0.5');
+    svg.appendChild(l);
+  }
+  for (let y = 0; y <= H; y += 20) {
+    const l = document.createElementNS(svgNS, 'line');
+    l.setAttribute('x1', 0); l.setAttribute('y1', y);
+    l.setAttribute('x2', W); l.setAttribute('y2', y);
+    l.setAttribute('stroke', 'rgba(212,168,67,0.06)'); l.setAttribute('stroke-width', '0.5');
+    svg.appendChild(l);
+  }
+
+  // rooms
+  rooms.forEach(r => {
+    const colorVar = TYPE_COLOR[r.type] || TYPE_COLOR['その他'];
+    const isPassage = r.type === '廊下' || r.type === '階段' || r.type === 'トイレ';
+    const g = document.createElementNS(svgNS, 'g');
+    g.style.cursor = isPassage ? 'default' : 'pointer';
+
+    // fill rect
+    const rect = document.createElementNS(svgNS, 'rect');
+    rect.setAttribute('x', r.x); rect.setAttribute('y', r.y);
+    rect.setAttribute('width', r.w); rect.setAttribute('height', r.h);
+    rect.setAttribute('fill', colorVar);
+    rect.setAttribute('fill-opacity', isPassage ? '0.25' : '0.38');
+    rect.setAttribute('stroke', colorVar);
+    rect.setAttribute('stroke-opacity', '0.7');
+    rect.setAttribute('stroke-width', '1.5');
+    rect.setAttribute('rx', '2');
+    g.appendChild(rect);
+
+    // hover rect (invisible, for hit area)
+    if (!isPassage) {
+      const hover = document.createElementNS(svgNS, 'rect');
+      hover.setAttribute('x', r.x); hover.setAttribute('y', r.y);
+      hover.setAttribute('width', r.w); hover.setAttribute('height', r.h);
+      hover.setAttribute('fill', 'transparent');
+      hover.setAttribute('rx', '2');
+      hover.addEventListener('mouseenter', (e) => {
+        rect.setAttribute('fill-opacity', '0.65');
+        showTooltip(e, r);
+      });
+      hover.addEventListener('mousemove', moveTooltip);
+      hover.addEventListener('mouseleave', () => {
+        rect.setAttribute('fill-opacity', '0.38');
+        hideTooltip();
+      });
+      g.appendChild(hover);
+    }
+
+    // label
+    const lines = r.label.split('\n');
+    const lineH = 13;
+    const totalH = lines.length * lineH;
+    const cy = r.y + r.h / 2;
+    const startY2 = cy - totalH / 2 + lineH / 2;
+
+    lines.forEach((line, i) => {
+      const txt = document.createElementNS(svgNS, 'text');
+      txt.setAttribute('x', r.x + r.w / 2);
+      txt.setAttribute('y', startY2 + i * lineH);
+      txt.setAttribute('text-anchor', 'middle');
+      txt.setAttribute('dominant-baseline', 'middle');
+      txt.setAttribute('font-size', r.w < 80 || r.h < 50 ? '8' : '10');
+      txt.setAttribute('font-family', 'Noto Serif JP, serif');
+      txt.setAttribute('fill', isPassage ? 'rgba(58,40,24,0.4)' : 'rgba(26,18,10,0.75)');
+      txt.setAttribute('font-weight', '400');
+      txt.setAttribute('pointer-events', 'none');
+      txt.textContent = line;
+      g.appendChild(txt);
+    });
+
+    // small number badge for rooms with content
+    if (r.grade && r.id) {
+      const badge = document.createElementNS(svgNS, 'text');
+      badge.setAttribute('x', r.x + 4);
+      badge.setAttribute('y', r.y + 10);
+      badge.setAttribute('font-size', '7');
+      badge.setAttribute('font-family', 'Cinzel, serif');
+      badge.setAttribute('fill', 'rgba(26,18,10,0.35)');
+      badge.setAttribute('pointer-events', 'none');
+      svg.appendChild(badge);
+    }
+
+    svg.appendChild(g);
+  });
+
+  // border
+  const border = document.createElementNS(svgNS, 'rect');
+  border.setAttribute('width', W - 1); border.setAttribute('height', H - 1);
+  border.setAttribute('x', 0.5); border.setAttribute('y', 0.5);
+  border.setAttribute('fill', 'none');
+  border.setAttribute('stroke', 'rgba(212,168,67,0.4)'); border.setAttribute('stroke-width', '1');
+  svg.appendChild(border);
+
+  return svg;
+}
+
+// ============================================================
+// TOOLTIP
+// ============================================================
+const tooltip = document.getElementById('tooltip');
+function showTooltip(e, r) {
+  document.getElementById('tt-grade').textContent = r.grade;
+  document.getElementById('tt-title').textContent = r.title;
+  document.getElementById('tt-type').textContent  = r.type;
+  document.getElementById('tt-info').textContent  = r.info;
+  tooltip.classList.add('show');
+  moveTooltip(e);
+}
+function moveTooltip(e) {
+  let x = e.clientX + 14, y = e.clientY + 14;
+  if (x + 230 > window.innerWidth)  x = e.clientX - 230;
+  if (y + 120 > window.innerHeight) y = e.clientY - 120;
+  tooltip.style.left = x + 'px';
+  tooltip.style.top  = y + 'px';
+}
+function hideTooltip() { tooltip.classList.remove('show'); }
+
+// ============================================================
+// SWITCH FLOOR
+// ============================================================
+function switchFloor(id) {
+  currentFloor = id;
+  document.querySelectorAll('.floor-tab').forEach((b,i) => b.classList.toggle('active', FLOORS[i].id === id));
+  const wrap = document.getElementById('mapWrap');
+  wrap.innerHTML = '';
+  const svg = buildMap(id);
+  svg.style.transform = `scale(${scale})`;
+  svg.style.transformOrigin = 'top left';
+  svg.style.transition = 'transform 0.2s';
+  wrap.appendChild(svg);
+  wrap.style.width = (W * scale) + 'px';
+  wrap.style.height = (H * scale) + 'px';
+}
+
+function switchListFloor(id) {
+  listFloor = id;
+  document.querySelectorAll('.list-floor-btn').forEach((b,i) => b.classList.toggle('active', FLOORS[i].id === id));
+  renderList();
+}
+
+// ============================================================
+// ZOOM
+// ============================================================
+function zoom(factor) {
+  scale = Math.min(Math.max(scale * factor, 0.5), 3);
+  applyScale();
+}
+function resetZoom() {
+  scale = 1;
+  applyScale();
+}
+function applyScale() {
+  const wrap = document.getElementById('mapWrap');
+  const svg = wrap.querySelector('svg');
+  if (!svg) return;
+  svg.style.transform = `scale(${scale})`;
+  wrap.style.width  = (W * scale) + 'px';
+  wrap.style.height = (H * scale) + 'px';
+}
+
+// ============================================================
+// ROOM LIST
+// ============================================================
+function renderList() {
+  const list = document.getElementById('roomList');
+  const rooms = (ROOMS[listFloor] || []).filter(r => r.grade);
+  list.innerHTML = rooms.map(r => {
+    const col = TYPE_COLOR[r.type] || TYPE_COLOR['その他'];
+    return `<div class="room-item" onclick="switchFloor('${listFloor}')">
+      <div class="room-item-dot" style="background:${col};border-radius:2px;margin-top:4px"></div>
+      <div class="room-item-body">
+        <div class="room-item-name">${r.title}</div>
+        <div class="room-item-sub">${r.grade} · ${r.label.replace('\n',' ')}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// DRAG TO PAN
+// ============================================================
+const mapContainer = document.querySelector('.map-container');
+mapContainer.style.overflow = 'auto';
+mapContainer.addEventListener('mousedown', e => {
+  isDragging = true;
+  startX = e.pageX - mapContainer.offsetLeft;
+  startY = e.pageY - mapContainer.offsetTop;
+  scrollLeft = mapContainer.scrollLeft;
+  scrollTop  = mapContainer.scrollTop;
+  mapContainer.style.cursor = 'grabbing';
+});
+mapContainer.addEventListener('mouseleave', () => { isDragging = false; mapContainer.style.cursor = 'default'; });
+mapContainer.addEventListener('mouseup',   () => { isDragging = false; mapContainer.style.cursor = 'default'; });
+mapContainer.addEventListener('mousemove', e => {
+  if (!isDragging) return;
+  e.preventDefault();
+  const x = e.pageX - mapContainer.offsetLeft;
+  const y = e.pageY - mapContainer.offsetTop;
+  mapContainer.scrollLeft = scrollLeft - (x - startX);
+  mapContainer.scrollTop  = scrollTop  - (y - startY);
+});
+
+// ============================================================
+// INIT
+// ============================================================
+buildTabs();
+switchFloor('f1');
+renderList();
+</script>
+</body>
+</html>

@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>梨花祭とは — 梨花祭2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@300;400;500&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#d4a843;--gold-light:#f0d080;--gold-pale:#faf0d0;
+  --teal:#2a7a80;--teal-light:#48b0b8;
+  --rose:#c9546a;
+  --cream:#fdf8f0;--ink:#1a120a;--ink-soft:#3a2818;--parchment:#f5ead8;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--cream);color:var(--ink);font-family:'Noto Serif JP',serif;overflow-x:hidden;}
+
+/* ── NAV ── */
+.top-nav{background:var(--ink);border-bottom:1px solid rgba(212,168,67,.2);padding:0 24px;position:sticky;top:0;z-index:100;}
+.top-nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;height:52px;}
+.back-btn{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.25em;color:rgba(240,208,128,.5);text-decoration:none;display:flex;align-items:center;gap:8px;text-transform:uppercase;transition:color .2s;}
+.back-btn:hover{color:var(--gold-light);}
+.back-btn::before{content:'←';font-family:sans-serif;font-size:13px;}
+.nav-sep{width:1px;height:20px;background:rgba(212,168,67,.15);margin:0 20px;}
+.nav-site{font-family:'Noto Serif JP',serif;font-size:15px;font-weight:300;color:rgba(240,208,128,.4);letter-spacing:.1em;}
+.nav-links{margin-left:auto;display:flex;}
+.nav-links a{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.2em;color:rgba(240,208,128,.4);text-decoration:none;padding:0 14px;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover{color:var(--gold);}
+
+/* ===== NAV ===== */
+nav{background:var(--ink);padding:0 24px;position:sticky;top:0;z-index:100;}
+.nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;height:52px;gap:24px;flex-wrap:wrap;}
+.nav-inner a{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.2em;color:rgba(240,208,128,.4);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+.nav-inner a:hover{color:var(--gold);}
+
+/* ── HERO ── */
+.hero{
+  min-height:60vh;
+  background:var(--ink);
+  position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  padding:80px 24px;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 20% 50%,rgba(212,168,67,.1) 0%,transparent 55%),
+    radial-gradient(ellipse at 80% 30%,rgba(201,84,106,.08) 0%,transparent 50%),
+    radial-gradient(ellipse at 50% 90%,rgba(72,176,184,.06) 0%,transparent 50%);
+}
+/* floating particles */
+.particle{position:absolute;border-radius:50%;background:var(--gold-light);animation:float var(--dur,6s) ease-in-out infinite var(--delay,0s);}
+@keyframes float{0%,100%{transform:translateY(0) scale(1);opacity:.15;}50%{transform:translateY(-20px) scale(1.2);opacity:.4;}}
+.hero-frame{position:absolute;inset:24px;border:1px solid rgba(212,168,67,.15);pointer-events:none;}
+.hero-frame::before,.hero-frame::after{content:'';position:absolute;width:36px;height:36px;border-color:var(--gold);border-style:solid;}
+.hero-frame::before{top:-1px;left:-1px;border-width:2px 0 0 2px;}
+.hero-frame::after{bottom:-1px;right:-1px;border-width:0 2px 2px 0;}
+.hero-content{position:relative;text-align:center;max-width:680px;}
+.hero-eyebrow{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.4em;color:var(--gold);opacity:.7;text-transform:uppercase;display:block;margin-bottom:24px;}
+.hero-title-jp{font-family:'Noto Serif JP',serif;font-size:clamp(40px,8vw,72px);font-weight:300;color:var(--gold-light);letter-spacing:.2em;line-height:1;margin-bottom:12px;text-shadow:0 0 40px rgba(212,168,67,.25);}
+.hero-title-en{font-family:'Cormorant Garamond',serif;font-size:clamp(14px,3vw,22px);font-weight:300;font-style:italic;color:rgba(232,212,168,.5);letter-spacing:.3em;margin-bottom:40px;}
+.hero-divider{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:32px;}
+.hero-divider-line{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.hero-divider-diamond{width:5px;height:5px;background:var(--gold);transform:rotate(45deg);}
+.hero-tagline{font-family:'Cormorant Garamond',serif;font-size:clamp(15px,2.5vw,20px);font-style:italic;color:rgba(232,212,168,.65);letter-spacing:.08em;line-height:1.7;}
+
+/* ── SECTION BASE ── */
+.section{max-width:860px;margin:0 auto;padding:80px 24px;}
+.section-eyebrow{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;opacity:.7;display:block;margin-bottom:14px;text-align:center;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,5vw,44px);font-weight:300;font-style:italic;color:var(--ink);text-align:center;margin-bottom:8px;letter-spacing:.05em;}
+.section-title-jp{font-family:'Noto Serif JP',serif;font-size:12px;font-weight:300;color:var(--gold);letter-spacing:.3em;text-align:center;margin-bottom:56px;}
+.section-divider{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:56px;}
+.section-divider-line{width:48px;height:1px;background:linear-gradient(90deg,transparent,rgba(212,168,67,.4),transparent);}
+.section-divider-diamond{width:4px;height:4px;background:var(--gold);transform:rotate(45deg);opacity:.6;}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:none;}
+
+/* ── THEME SECTION ── */
+.theme-section{background:var(--ink);padding:80px 0;position:relative;overflow:hidden;}
+.theme-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(212,168,67,.07) 0%,transparent 55%),radial-gradient(ellipse at 70% 30%,rgba(201,84,106,.05) 0%,transparent 50%);}
+.theme-section .section-title{color:var(--gold-light);}
+.theme-section .section-title-jp{color:rgba(240,208,128,.45);}
+.theme-section .section-eyebrow{color:rgba(212,168,67,.6);}
+
+.theme-keyword{
+  text-align:center;margin-bottom:56px;
+}
+.theme-keyword-main{
+  font-family:'Noto Serif JP',serif;
+  font-size:clamp(32px,6vw,56px);
+  font-weight:300;color:var(--gold-light);
+  letter-spacing:.25em;
+  display:block;margin-bottom:8px;
+  text-shadow:0 0 30px rgba(212,168,67,.2);
+}
+.theme-keyword-en{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(16px,3vw,24px);
+  font-style:italic;color:rgba(240,208,128,.45);
+  letter-spacing:.2em;
+}
+
+.theme-body{
+  max-width:620px;margin:0 auto;
+  font-size:15px;color:rgba(240,208,128,.65);
+  line-height:2.2;font-weight:300;
+  text-align:center;
+}
+
+.theme-pillars{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
+  margin-top:56px;
+}
+@media(max-width:600px){.theme-pillars{grid-template-columns:1fr;}}
+.pillar{
+  border:1px solid rgba(212,168,67,.2);
+  padding:28px 20px;text-align:center;
+  position:relative;
+  background:rgba(212,168,67,.03);
+  transition:border-color .3s,background .3s;
+}
+.pillar:hover{border-color:rgba(212,168,67,.45);background:rgba(212,168,67,.06);}
+.pillar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.pillar-icon{font-size:32px;margin-bottom:16px;display:block;}
+.pillar-title{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;margin-bottom:10px;display:block;}
+.pillar-desc{font-size:12px;color:rgba(240,208,128,.55);line-height:1.9;font-weight:300;}
+
+/* ── MESSAGE SECTION ── */
+.message-section{background:var(--parchment);padding:80px 0;}
+.message-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:0;}
+@media(max-width:680px){.message-grid{grid-template-columns:1fr;}}
+.message-card{
+  background:#fff;
+  border:1px solid rgba(212,168,67,.2);
+  padding:36px 32px;
+  position:relative;
+  overflow:hidden;
+}
+.message-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--teal-light));}
+.message-card-role{
+  font-family:'Cinzel',serif;font-size:8px;letter-spacing:.3em;
+  color:var(--gold);text-transform:uppercase;opacity:.8;
+  margin-bottom:6px;display:block;
+}
+.message-card-name{
+  font-family:'Noto Serif JP',serif;font-size:17px;font-weight:500;
+  color:var(--ink);margin-bottom:20px;
+}
+.message-card-quote{
+  font-size:13px;color:var(--ink-soft);line-height:2.1;
+  font-weight:300;position:relative;padding-left:16px;
+}
+.message-card-quote::before{
+  content:'"';
+  font-family:'Cormorant Garamond',serif;font-size:48px;
+  color:rgba(212,168,67,.2);position:absolute;
+  left:-8px;top:-12px;line-height:1;
+}
+.message-card-sig{
+  margin-top:20px;text-align:right;
+  font-family:'Cormorant Garamond',serif;font-size:14px;
+  font-style:italic;color:rgba(58,40,24,.35);
+}
+
+/* ── COMMITTEE SECTION ── */
+.committee-section{padding:80px 0;}
+.committee-intro{
+  max-width:600px;margin:0 auto 56px;text-align:center;
+  font-size:14px;color:var(--ink-soft);line-height:2;font-weight:300;
+}
+.committee-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;
+}
+.committee-card{
+  background:var(--parchment);border:1px solid rgba(212,168,67,.2);
+  padding:24px 20px;text-align:center;
+  transition:transform .25s,box-shadow .25s;
+}
+.committee-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(26,18,10,.08);}
+.committee-card-icon{font-size:28px;margin-bottom:12px;display:block;}
+.committee-card-dept{
+  font-family:'Cinzel',serif;font-size:8px;letter-spacing:.2em;
+  color:var(--gold);text-transform:uppercase;opacity:.7;
+  margin-bottom:6px;display:block;
+}
+.committee-card-name{font-size:14px;font-weight:500;color:var(--ink);margin-bottom:6px;}
+.committee-card-members{font-size:11px;color:var(--ink-soft);opacity:.55;font-weight:300;}
+
+/* ── NUMBERS ── */
+.numbers-section{background:var(--ink);padding:72px 24px;}
+.numbers-inner{max-width:860px;margin:0 auto;}
+.numbers-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
+@media(max-width:600px){.numbers-grid{grid-template-columns:repeat(2,1fr);}}
+.number-item{
+  text-align:center;padding:32px 16px;
+  border-right:1px solid rgba(212,168,67,.12);
+}
+.number-item:last-child{border-right:none;}
+@media(max-width:600px){
+  .number-item:nth-child(2){border-right:none;}
+  .number-item:nth-child(3){border-right:1px solid rgba(212,168,67,.12);}
+}
+.number-value{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(36px,6vw,56px);font-weight:300;
+  color:var(--gold-light);line-height:1;
+  display:block;margin-bottom:8px;
+}
+.number-unit{font-size:14px;color:rgba(240,208,128,.5);font-weight:300;display:block;margin-bottom:4px;}
+.number-label{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.2em;color:rgba(240,208,128,.35);text-transform:uppercase;}
+
+/* ── FOOTER ── */
+footer{background:var(--ink);padding:48px 24px;text-align:center;border-top:1px solid rgba(212,168,67,.1);}
+.footer-logo{font-family:'Noto Serif JP',serif;font-size:22px;font-weight:300;color:var(--gold-light);letter-spacing:.2em;margin-bottom:8px;}
+.footer-sub{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.3em;color:rgba(240,208,128,.25);text-transform:uppercase;margin-bottom:28px;}
+.footer-links{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-bottom:28px;}
+.footer-links a{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.2em;color:rgba(240,208,128,.35);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+.footer-links a:hover{color:var(--gold);}
+.footer-copy{font-size:11px;color:rgba(240,208,128,.18);font-weight:300;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="about.html">梨花祭とは</a>
+    <a href="attractions.html">企画一覧</a>
+    <a href="map.html">マップ</a>
+    <a href="schedule.html">プログラム</a>
+    <a onclick="scrollToSection('notice')">お知らせ</a>
+    <a onclick="scrollToSection('award')">梨花祭賞</a>
+    <a href="gallery.html">ギャラリー</a>
+    <a href="rules.html">ご注意</a>
+    <a href="ticket.html">料金</a>
+    <a href="sns.html">SNS</a>
+    <a onclick="scrollToSection('access')">アクセス</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-frame"></div>
+  <div id="particles"></div>
+  <div class="hero-content">
+    <span class="hero-eyebrow">Chiba Eiwa High School — 2026</span>
+    <h1 class="hero-title-jp">梨花祭</h1>
+    <p class="hero-title-en">Rikasai 2026</p>
+    <div class="hero-divider">
+      <div class="hero-divider-line"></div>
+      <div class="hero-divider-diamond"></div>
+      <div class="hero-divider-line"></div>
+    </div>
+    <p class="hero-tagline">
+      夢と魔法が交わる場所へ、ようこそ。<br>
+      <span style="font-size:.85em;opacity:.75">Welcome to a place where dreams and magic intertwine.</span>
+    </p>
+  </div>
+</section>
+
+<!-- NUMBERS -->
+<section class="numbers-section">
+  <div class="numbers-inner">
+    <div class="numbers-grid">
+      <div class="number-item reveal">
+        <span class="number-value">40</span>
+        <span class="number-unit">団体</span>
+        <span class="number-label">Exhibitions</span>
+      </div>
+      <div class="number-item reveal" style="transition-delay:.1s">
+        <span class="number-value">2</span>
+        <span class="number-unit">日間</span>
+        <span class="number-label">Days</span>
+      </div>
+      <div class="number-item reveal" style="transition-delay:.2s">
+        <span class="number-value">6</span>
+        <span class="number-unit">棟</span>
+        <span class="number-label">Buildings</span>
+      </div>
+      <div class="number-item reveal" style="transition-delay:.3s">
+        <span class="number-value">1</span>
+        <span class="number-unit">テーマ</span>
+        <span class="number-label">Theme</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THEME -->
+<section class="theme-section" id="theme">
+  <div class="section">
+    <span class="section-eyebrow reveal">Theme 2026</span>
+    <h2 class="section-title reveal">今年のテーマ</h2>
+    <p class="section-title-jp reveal">About the Theme</p>
+
+    <div class="theme-keyword reveal">
+      <span class="theme-keyword-main">「 ＊＊＊＊＊ 」</span>
+      <span class="theme-keyword-en">— Fantasy &amp; Fairy Tale —</span>
+    </div>
+
+    <p class="theme-body reveal">
+      ※ ここにテーマの説明文を入力してください。<br><br>
+      たとえば——<br>
+      日常を飛び越えた先に広がる、魔法と物語の世界。
+      梨花祭2026のテーマは「ファンタジー」。
+      各クラス・部活がそれぞれの想像力で紡ぎ出す、
+      ここだけにしかない非日常の体験を、ぜひお楽しみください。
+    </p>
+
+    <div class="theme-pillars reveal">
+      <div class="pillar">
+        <span class="pillar-icon">✨</span>
+        <span class="pillar-title">Imagination</span>
+        <p class="pillar-desc">想像力を解き放て。現実の枠を超えた発想で、新しい世界を創り出す。</p>
+      </div>
+      <div class="pillar">
+        <span class="pillar-icon">🤝</span>
+        <span class="pillar-title">Together</span>
+        <p class="pillar-desc">クラスメイトと力を合わせ、ひとつの物語を紡ぐ喜びを。</p>
+      </div>
+      <div class="pillar">
+        <span class="pillar-icon">🌟</span>
+        <span class="pillar-title">Memory</span>
+        <p class="pillar-desc">訪れる人すべての心に残る、忘れられない一日を届けたい。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MESSAGES -->
+<section class="message-section" id="message">
+  <div class="section">
+    <span class="section-eyebrow reveal">Message</span>
+    <h2 class="section-title reveal" style="color:var(--ink)">ご挨拶</h2>
+    <p class="section-title-jp reveal">Messages</p>
+
+    <div class="message-grid">
+      <div class="message-card reveal">
+        <span class="message-card-role">実行委員長</span>
+        <div class="message-card-name">○○ ○○</div>
+        <p class="message-card-quote">
+          ※ ここに実行委員長からのメッセージを入力してください。<br><br>
+          梨花祭2026のテーマ「〇〇」には、〇〇という想いを込めました。
+          クラス全員で試行錯誤しながら作り上げたこの祭りを、
+          ぜひ存分に楽しんでいただければ幸いです。
+        </p>
+        <p class="message-card-sig">— 実行委員長</p>
+      </div>
+      <div class="message-card reveal" style="transition-delay:.15s">
+        <span class="message-card-role">副実行委員長</span>
+        <div class="message-card-name">○○ ○○</div>
+        <p class="message-card-quote">
+          ※ ここに副実行委員長からのメッセージを入力してください。<br><br>
+          準備期間を通じて、仲間たちと悩み、笑い、ぶつかりながら
+          ここまで来ることができました。その結晶をどうぞご覧ください。
+        </p>
+        <p class="message-card-sig">— 副実行委員長</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMITTEE -->
+<section class="committee-section" id="committee">
+  <div class="section">
+    <span class="section-eyebrow reveal">Organization</span>
+    <h2 class="section-title reveal">実行委員会</h2>
+    <p class="section-title-jp reveal">Executive Committee</p>
+
+    <p class="committee-intro reveal">
+      梨花祭2026は、生徒有志による実行委員会が中心となって企画・運営しています。
+      各部門のメンバーが半年以上をかけて準備してきた集大成です。
+    </p>
+
+    <div class="committee-grid">
+      <div class="committee-card reveal">
+        <span class="committee-card-icon">🎯</span>
+        <span class="committee-card-dept">General</span>
+        <div class="committee-card-name">総務部</div>
+        <p class="committee-card-members">全体統括・進行管理</p>
+      </div>
+      <div class="committee-card reveal" style="transition-delay:.05s">
+        <span class="committee-card-icon">🎨</span>
+        <span class="committee-card-dept">Design</span>
+        <div class="committee-card-name">デザイン部</div>
+        <p class="committee-card-members">ビジュアル・装飾・サイト制作</p>
+      </div>
+      <div class="committee-card reveal" style="transition-delay:.1s">
+        <span class="committee-card-icon">📣</span>
+        <span class="committee-card-dept">PR</span>
+        <div class="committee-card-name">広報部</div>
+        <p class="committee-card-members">SNS・告知・チラシ配布</p>
+      </div>
+      <div class="committee-card reveal" style="transition-delay:.15s">
+        <span class="committee-card-icon">🏛️</span>
+        <span class="committee-card-dept">Venue</span>
+        <div class="committee-card-name">会場部</div>
+        <p class="committee-card-members">設営・撤収・動線管理</p>
+      </div>
+      <div class="committee-card reveal" style="transition-delay:.2s">
+        <span class="committee-card-icon">🔒</span>
+        <span class="committee-card-dept">Safety</span>
+        <div class="committee-card-name">安全管理部</div>
+        <p class="committee-card-members">来場者誘導・緊急対応</p>
+      </div>
+      <div class="committee-card reveal" style="transition-delay:.25s">
+        <span class="committee-card-icon">🎤</span>
+        <span class="committee-card-dept">Stage</span>
+        <div class="committee-card-name">ステージ部</div>
+        <p class="committee-card-members">音響・照明・司会進行</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-logo">梨花祭 2026</p>
+  <p class="footer-sub">Chiba Eiwa High School Cultural Festival</p>
+  <div class="footer-links">
+    <a href="rikasai2026.html">トップ</a>
+    <a href="attractions.html">企画一覧</a>
+    <a href="map.html">マップ</a>
+    <a href="rikasai2026.html#schedule">スケジュール</a>
+    <a href="rikasai2026.html#award">梨花祭賞</a>
+    <a href="rikasai2026.html#access">アクセス</a>
+  </div>
+  <p class="footer-copy">© 2026 梨花祭実行委員会 · 千葉英和高等学校生徒会</p>
+</footer>
+
+<script>
+// particles
+(function(){
+  const c = document.getElementById('particles');
+  for(let i=0;i<20;i++){
+    const p = document.createElement('div');
+    p.className='particle';
+    const size = Math.random()*3+1;
+    p.style.cssText=`
+      width:${size}px;height:${size}px;
+      top:${Math.random()*100}%;left:${Math.random()*100}%;
+      --dur:${(Math.random()*5+4).toFixed(1)}s;
+      --delay:-${(Math.random()*8).toFixed(1)}s;
+    `;
+    c.appendChild(p);
+  }
+})();
+
+// scroll reveal
+const obs = new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting) e.target.classList.add('visible');
+}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

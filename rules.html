@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>来場者のみなさまへ — 梨花祭2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400&family=Noto+Serif+JP:wght@300;400;500&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#d4a843;--gold-light:#f0d080;--rose:#c9546a;--cream:#fdf8f0;--ink:#1a120a;--ink-soft:#3a2818;--parchment:#f5ead8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--cream);color:var(--ink);font-family:'Noto Serif JP',serif;}
+.top-nav{background:var(--ink);border-bottom:1px solid rgba(212,168,67,.2);padding:0 24px;position:sticky;top:0;z-index:100;}
+.top-nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;height:52px;}
+.back-btn{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.25em;color:rgba(240,208,128,.5);text-decoration:none;display:flex;align-items:center;gap:8px;text-transform:uppercase;transition:color .2s;}
+.back-btn:hover{color:var(--gold-light);}
+.back-btn::before{content:'←';}
+.nav-sep{width:1px;height:20px;background:rgba(212,168,67,.15);margin:0 20px;}
+.nav-site{font-family:'Noto Serif JP',serif;font-size:15px;font-weight:300;color:rgba(240,208,128,.4);letter-spacing:.1em;}
+.nav-links{margin-left:auto;display:flex;}
+.nav-links a{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.2em;color:rgba(240,208,128,.4);text-decoration:none;padding:0 14px;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover{color:var(--gold);}
+
+/* ===== NAV ===== */
+nav{background:var(--ink);padding:0 24px;position:sticky;top:0;z-index:100;}
+.nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;height:52px;gap:24px;flex-wrap:wrap;}
+.nav-inner a{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.2em;color:rgba(240,208,128,.4);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+.nav-inner a:hover{color:var(--gold);}
+
+.hero{background:var(--ink);padding:60px 24px;position:relative;overflow:hidden;border-bottom:1px solid rgba(212,168,67,.12);}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 15% 60%,rgba(212,168,67,.07) 0%,transparent 55%);}
+.hero-inner{max-width:860px;margin:0 auto;position:relative;}
+.eyebrow{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.4em;color:var(--gold);opacity:.6;text-transform:uppercase;display:block;margin-bottom:14px;}
+.hero-title{font-family:'Noto Serif JP',serif;font-size:clamp(28px,5vw,42px);font-weight:300;color:var(--gold-light);letter-spacing:.15em;margin-bottom:8px;}
+.hero-sub{font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:rgba(240,208,128,.4);letter-spacing:.15em;}
+.section{max-width:860px;margin:0 auto;padding:60px 24px;}
+.rule-block{margin-bottom:48px;}
+.rule-icon{font-size:32px;margin-bottom:16px;}
+.rule-title{font-family:'Cinzel',serif;font-size:18px;letter-spacing:.1em;color:var(--ink);margin-bottom:12px;display:flex;align-items:center;gap:12px;}
+.rule-title::before{content:'';display:inline-block;width:2px;height:20px;background:var(--gold);}
+.rule-list{list-style:none;padding-left:0;margin-left:0;}
+.rule-list li{font-size:14px;color:var(--ink-soft);line-height:2;margin-bottom:8px;padding-left:24px;position:relative;}
+.rule-list li::before{content:'▸';position:absolute;left:0;color:var(--gold);}
+.alert-box{background:#fff3cd;border-left:4px solid #ff6b6b;padding:20px;margin:32px 0;border-radius:2px;}
+.alert-title{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.2em;color:#c92a2a;text-transform:uppercase;margin-bottom:8px;font-weight:600;}
+.alert-text{font-size:13px;color:#5a4a35;line-height:1.8;}
+.contact-box{background:var(--parchment);border:1px solid rgba(212,168,67,.3);padding:24px;margin-top:48px;}
+.contact-title{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:12px;}
+.contact-content{font-size:13px;color:var(--ink-soft);line-height:2;}
+footer{background:var(--ink);padding:36px 24px;text-align:center;border-top:1px solid rgba(212,168,67,.1);}
+.footer-logo{font-family:'Noto Serif JP',serif;font-size:18px;font-weight:300;color:var(--gold-light);letter-spacing:.2em;margin-bottom:6px;}
+.footer-copy{font-size:11px;color:rgba(240,208,128,.18);font-weight:300;}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="about.html">梨花祭とは</a>
+    <a href="attractions.html">企画一覧</a>
+    <a href="map.html">マップ</a>
+    <a href="schedule.html">プログラム</a>
+    <a onclick="scrollToSection('notice')">お知らせ</a>
+    <a onclick="scrollToSection('award')">梨花祭賞</a>
+    <a href="gallery.html">ギャラリー</a>
+    <a href="rules.html">ご注意</a>
+    <a href="ticket.html">料金</a>
+    <a href="sns.html">SNS</a>
+    <a onclick="scrollToSection('access')">アクセス</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">Notice</span>
+    <h1 class="hero-title">来場者のみなさまへ</h1>
+    <p class="hero-sub">Please read the following rules and precautions</p>
+  </div>
+</section>
+
+<section class="section">
+  
+  <div class="rule-block">
+    <div class="rule-icon">📅</div>
+    <h2 class="rule-title">開催日時</h2>
+    <ul class="rule-list">
+      <li><strong>2026年7月17日（金）・18日（土）</strong></li>
+      <li>開場：9:00　閉場：16:00</li>
+      <li>雨天決行（ただし警報発令時は中止の可能性があります）</li>
+    </ul>
+  </div>
+
+  <div class="rule-block">
+    <div class="rule-icon">🚗</div>
+    <h2 class="rule-title">アクセス・駐車場</h2>
+    <ul class="rule-list">
+      <li>公開駐車場あり（先着順・無料）</li>
+      <li>路上駐車は禁止です</li>
+      <li>最寄駅：〇〇駅 徒歩〇分</li>
+      <li>バスでのご来場も歓迎です</li>
+    </ul>
+  </div>
+
+  <div class="rule-block">
+    <div class="rule-icon">🚫</div>
+    <h2 class="rule-title">禁止事項</h2>
+    <ul class="rule-list">
+      <li><strong>飲酒・喫煙は一切禁止です</strong></li>
+      <li>火気・花火・爆竹の持ち込み・使用</li>
+      <li>ペットの連れ込み（介助犬を除く）</li>
+      <li>許可なく展示品や設営物に触れる</li>
+      <li>許可なく撮影・録画・録音</li>
+      <li>営利目的での写真・動画の使用</li>
+      <li>他の来場者への迷惑行為</li>
+    </ul>
+  </div>
+
+  <div class="alert-box">
+    <div class="alert-title">⚠️ 重要</div>
+    <p class="alert-text">
+      フォトスポットでの撮影は許可されていますが、<br>
+      他の来場者のプライバシーを尊重し、顔が写る場合は必ず本人の許可を得てください。
+    </p>
+  </div>
+
+  <div class="rule-block">
+    <div class="rule-icon">💰</div>
+    <h2 class="rule-title">飲食について</h2>
+    <ul class="rule-list">
+      <li>会場内での食事は指定エリアで行ってください</li>
+      <li>ゴミは必ず持ち帰るか指定のゴミ箱へ</li>
+      <li>アレルギー情報は各企画に確認してください</li>
+      <li>食中毒・健康被害のリスクは自己責任です</li>
+    </ul>
+  </div>
+
+  <div class="rule-block">
+    <div class="rule-icon">👨‍👩‍👧‍👦</div>
+    <h2 class="rule-title">お子様連れの方へ</h2>
+    <ul class="rule-list">
+      <li>保護者の付き添いをお願いいたします</li>
+      <li>迷子センターを設置しています（生徒会本部）</li>
+      <li>授乳室・おむつ替えスペースあり</li>
+      <li>病気・けがの場合は保健室にお越しください</li>
+    </ul>
+  </div>
+
+  <div class="rule-block">
+    <div class="rule-icon">♿</div>
+    <h2 class="rule-title">バリアフリー対応</h2>
+    <ul class="rule-list">
+      <li>車いす対応トイレあり</li>
+      <li>スロープ・手すり設置</li>
+      <li>お困りの際はスタッフまでお気軽にお声がけください</li>
+    </ul>
+  </div>
+
+  <div class="rule-block">
+    <div class="rule-icon">🎫</div>
+    <h2 class="rule-title">チケット・入場料金</h2>
+    <ul class="rule-list">
+      <li><strong>入場料金：無料</strong></li>
+      <li>チケットは不要です</li>
+      <li>企画ごとに料金が異なりますので、各企画でお確かめください</li>
+    </ul>
+  </div>
+
+  <div class="alert-box">
+    <div class="alert-title">ℹ️ お知らせ</div>
+    <p class="alert-text">
+      何かご不明な点やトラブルが生じた場合は、<br>
+      お気軽に生徒会本部（2号棟 1F）までお気軽にお越しください。<br>
+      スタッフ一同、皆様のご来場をお待ちしています！
+    </p>
+  </div>
+
+  <div class="contact-box">
+    <div class="contact-title">📞 緊急時のご連絡</div>
+    <div class="contact-content">
+      何か緊急の場合は、必ず最寄りのスタッフまでお知らせください。<br>
+      生徒会本部：2号棟 1階
+    </div>
+  </div>
+
+</section>
+
+<footer>
+  <p class="footer-logo">梨花祭 2026</p>
+  <p class="footer-copy">© 2026 梨花祭実行委員会</p>
+</footer>
+</body>
+</html>
