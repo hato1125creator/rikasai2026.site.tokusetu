@@ -1,0 +1,1 @@
+# rikasai2026.site.tokusetu
